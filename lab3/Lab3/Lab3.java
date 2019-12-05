@@ -180,4 +180,20 @@ public class Lab3 {
         Collections.reverse(mostSimilar);
         return mostSimilar;
     }
+
+    private HashMap<Path, Ngram[]> flattenBST(BST<Path, Ngram[]> bst){
+
+        TreeMap<Path, Ngram[]> hm = new TreeMap<>();
+
+        for (Path path : bst.keys()){
+            hm.put(path, bst.get(path)){
+
+            }
+        }
+
+        //Collections.sort(hm);
+    }
+
+
+
 }
