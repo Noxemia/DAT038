@@ -16,7 +16,7 @@ public class Lab3 {
                 System.out.flush();
                 directory = new Scanner(System.in).nextLine();
             } else directory = args[0];
-            Path[] paths = Files.list(Paths.get("lab3/documents/" +  directory)).toArray(Path[]::new);
+            Path[] paths = Files.list(Paths.get("lab3/documents/" + directory)).toArray(Path[]::new);
             Arrays.sort(paths);
 
             // Stopwatches time how long each phase of the program
@@ -51,7 +51,7 @@ public class Lab3 {
 
             // Print out the plagiarism report!
             System.out.println("Plagiarism report:");
-            for (PathPair pair: mostSimilar)
+            for (PathPair pair : mostSimilar)
                 System.out.printf("%5d similarity: %s\n", similarity.get(pair), pair);
         } catch (IOException e) {
             e.printStackTrace();
@@ -61,7 +61,7 @@ public class Lab3 {
     // Phase 1: Read in each file and chop it into n-grams.
     static BST<Path, Ngram[]> readPaths(Path[] paths) throws IOException {
         BST<Path, Ngram[]> files = new BST<>();
-        for (Path path: paths) {
+        for (Path path : paths) {
             String contents = new String(Files.readAllBytes(path));
             Ngram[] ngrams = Ngram.ngrams(contents, 5);
             // Remove duplicates from the ngrams list
@@ -81,14 +81,16 @@ public class Lab3 {
     static BST<Ngram, ArrayList<Path>> buildIndex(BST<Path, Ngram[]> files) {
         BST<Ngram, ArrayList<Path>> index = new BST<>();
 
-        for (Path key : files.keys()){
+        for (Path key : files.keys()) {
             Ngram[] ngrams = files.get(key);
-            for (Ngram n : ngrams){
-                if (index.contains(n)){
+            for (Ngram n : ngrams) {
+                if (index.contains(n)) {
                     index.get(n).add(key);
-                }else {
+                } else {
 
-                    index.put(n, new ArrayList<>(){{add(key); }});
+                    index.put(n, new ArrayList<>() {{
+                        add(key);
+                    }});
                 }
             }
         }
@@ -141,22 +143,22 @@ public class Lab3 {
 
         }*/
 
-       for (Ngram ngram : index.keys()){
-           ArrayList<Path> paths = index.get(ngram);
-           for(int i = 0 ;  i < paths.size(); i++ ){
-               for (int j = 0; j < paths.size() ; j++){
-                   if (i == j)
-                       continue;
-                   PathPair pp = new PathPair(paths.get(i), paths.get(j));
-                   if(similarity.contains(pp)){
-                       similarity.put(pp, 1 + similarity.get(pp));
-                   }else {
-                       similarity.put(pp, 1);
-                   }
-               }
-           }
+        for (Ngram ngram : index.keys()) {
+            ArrayList<Path> paths = index.get(ngram);
+            for (int i = 0; i < paths.size(); i++) {
+                for (int j = 0; j < paths.size(); j++) {
+                    if (i == j)
+                        continue;
+                    PathPair pp = new PathPair(paths.get(i), paths.get(j));
+                    if (similarity.contains(pp)) {
+                        similarity.put(pp, 1 + similarity.get(pp));
+                    } else {
+                        similarity.put(pp, 1);
+                    }
+                }
+            }
 
-       }
+        }
 
         return similarity;
     }
@@ -166,7 +168,7 @@ public class Lab3 {
     static ArrayList<PathPair> findMostSimilar(BST<PathPair, Integer> similarity) {
         // Find all pairs of files with more than 100 n-grams in common.
         ArrayList<PathPair> mostSimilar = new ArrayList<>();
-        for (PathPair pair: similarity.keys()) {
+        for (PathPair pair : similarity.keys()) {
             if (similarity.get(pair) < 30) continue;
             // Only consider each pair of files once - (a, b) and not
             // (b,a) - and also skip pairs consisting of the same file twice
@@ -181,19 +183,38 @@ public class Lab3 {
         return mostSimilar;
     }
 
-    private HashMap<Path, Ngram[]> flattenBST(BST<Path, Ngram[]> bst){
+    private HashMap<Path, Ngram[]> flattenBST(BST<Path, Ngram[]> bst) {
 
         TreeMap<Path, Ngram[]> hm = new TreeMap<>();
 
-        for (Path path : bst.keys()){
-            hm.put(path, bst.get(path)){
+        for (Path path : bst.keys()) {
+            hm.put(path, bst.get(path)) {
 
             }
         }
 
-        //Collections.sort(hm);
     }
 
+    private class Pair<T1 extends Comparable<T1>, T2 extends Comparable<T2>> implements Comparable<Pair<T1, T2>> {
+
+        public final T1 first;
+        public final T2 second;
+
+        Pair(T1 t1, T2 t2) {
+            first = t1;
+            second = t2;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return super.equals(obj);
+        }
+
+        @Override
+        public int compareTo(Pair<T1, T2> t1T2Pair) {
+            return first.compareTo(t1T2Pair.first);
+        }
+    }
 
 
 }
