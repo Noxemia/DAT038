@@ -1,0 +1,49 @@
+Running the slow program
+------------------------
+
+Q: What is the complexity of findSimilarity?
+Answer in terms of N, the total number of 5-grams in the input files.
+Assume that the number of 5-grams that occur in more than one file is a small
+constant - that is, there is not much plagiarised text.
+
+A:
+
+Q: How long did the program take on the 'small' and 'medium' directories?
+Is the ratio between the times what you would expect, given the complexity?
+Explain very briefly why.
+
+A:
+
+Q: How long do you predict the program would take to run on the 'huge'
+directory?
+
+A:
+
+Using binary search trees
+-------------------------
+
+Q: Which of the trees usually become unbalanced?
+
+A:
+
+Q (optional): Is there a simple way to stop these trees becoming unbalanced?
+
+A (optional): 
+
+Using scapegoat trees
+---------------------
+
+Q: Now what is the total complexity of buildIndex and findSimilarity?
+Again, assume a total of N 5-grams, and a constant number of 5-grams that
+occur in more than one file.
+
+A:
+
+Q (optional): What if the total similarity score is an arbitrary number S,
+rather than a small constant?
+
+A (optional):
+
+Q (optional): Did you find any text that was clearly copied?
+
+A (optional):
