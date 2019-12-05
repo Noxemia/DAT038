@@ -9,25 +9,16 @@ import java.util.function.*;
 // You only need to change buildIndex() and findSimilarity().
 public class Lab3 {
     public static void main(String[] args) {
-
-
         try {
-            Path[] paths = null;
-            while(true){
             String directory;
             if (args.length == 0) {
                 System.out.print("Name of directory to scan: ");
                 System.out.flush();
                 directory = new Scanner(System.in).nextLine();
             } else directory = args[0];
-            if(!(new File(directory).exists())) {
-                System.out.println("That file does not exist \n");
-                continue;
-            }
-            paths = Files.list(Paths.get(directory)).toArray(Path[]::new);
+            Path[] paths = Files.list(Paths.get("lab3/documents/" +  directory)).toArray(Path[]::new);
             Arrays.sort(paths);
-            break;
-        }
+
             // Stopwatches time how long each phase of the program
             // takes to execute.
             Stopwatch stopwatch = new Stopwatch();
